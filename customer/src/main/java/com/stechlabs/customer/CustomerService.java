@@ -1,10 +1,16 @@
 package com.stechlabs.customer;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 
 @Service
-public record CustomerService( CustomerRepository customerRepository ) {
+@AllArgsConstructor
+public class CustomerService {
+
+    private final CustomerRepository customerRepository;
+    private final RestTemplate restTemplate;
 
     public void registerCustomer( CustomerRegistrationRequest registrationRequest ){
         Customer customer = Customer.builder()
@@ -12,8 +18,22 @@ public record CustomerService( CustomerRepository customerRepository ) {
                 .lastName( registrationRequest.lastName() )
                 .email( registrationRequest.email() )
                 .build();
-        // save the customer
-        customerRepository.save( customer );
+        // todo check customer registration email duplication
+        // save the customer and populate the id in entity
+        customerRepository.saveAndFlush( customer );
+
+        // check is fraudster
+        FraudCheckResponse fraudCheckResponse = restTemplate.getForObject(
+                "http://FRAUD/api/v1/fraud-check/{customerId}",
+                FraudCheckResponse.class,
+                customer.getId()
+        );
+
+        if( fraudCheckResponse != null && fraudCheckResponse.isFraudster() ){
+
+            throw new RuntimeException( "Fraudster" );
+            // todo send the notification
+        }
 
     }
 

@@ -1,13 +1,16 @@
 package com.stechlabs.customer;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
 @RequestMapping( "/api/v1/customers")
-public record CustomerController( CustomerService customerService) {
+@AllArgsConstructor
+public class CustomerController {
 
+    private final CustomerService customerService;
 
     @GetMapping( "{customerId}")
     public Customer findCustomer(@PathVariable int customerId ){
