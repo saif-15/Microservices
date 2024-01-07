@@ -4,6 +4,9 @@
 
 This repository contains a sample Spring Boot microservice application, along with Docker Compose and Kubernetes configurations to facilitate easy deployment and orchestration.
 
+![project-overview](https://github.com/saif-15/Microservices/assets/46129194/2e4edcfb-52e0-4dcd-99e8-a11ffa6c67f0)
+
+
 ## Features
 
 - **Spring Boot Microservice:** A simple yet powerful microservice built using the Spring Boot framework.
