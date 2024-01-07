@@ -9,8 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.stechlabs.Fraud</groupId>
-    <artifactId>fraud</artifactId>
+    <artifactId>notification</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -47,5 +46,6 @@
             <artifactId>spring-cloud-starter-sleuth</artifactId>
         </dependency>
     </dependencies>
+
 
 </project>

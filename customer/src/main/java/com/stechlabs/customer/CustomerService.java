@@ -1,8 +1,13 @@
 package com.stechlabs.customer;
 
+import com.stechlabs.clients.fraud.FraudCheckResponse;
+import com.stechlabs.clients.fraud.FraudClient;
+import com.stechlabs.clients.notification.NotificationClient;
+import com.stechlabs.clients.notification.NotificationRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+
+import java.time.LocalDateTime;
 
 
 @Service
@@ -10,7 +15,8 @@ import org.springframework.web.client.RestTemplate;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
-    private final RestTemplate restTemplate;
+    private final FraudClient fraudClient;
+    private final NotificationClient notificationClient;
 
     public void registerCustomer( CustomerRegistrationRequest registrationRequest ){
         Customer customer = Customer.builder()
@@ -23,18 +29,23 @@ public class CustomerService {
         customerRepository.saveAndFlush( customer );
 
         // check is fraudster
-        FraudCheckResponse fraudCheckResponse = restTemplate.getForObject(
-                "http://FRAUD/api/v1/fraud-check/{customerId}",
-                FraudCheckResponse.class,
-                customer.getId()
-        );
+//        FraudCheckResponse fraudCheckResponse = restTemplate.getForObject(
+//                "http://FRAUD/api/v1/fraud-check/{customerId}",
+//                FraudCheckResponse.class,
+//                customer.getId()
+//        );
+        FraudCheckResponse fraudCheckResponse = fraudClient.checkIsFraudster( customer.getId() );
 
-        if( fraudCheckResponse != null && fraudCheckResponse.isFraudster() ){
-
-            throw new RuntimeException( "Fraudster" );
-            // todo send the notification
+        if( fraudCheckResponse != null && ! fraudCheckResponse.isFraudster() ){
+            NotificationRequest notificationRequest = NotificationRequest.builder()
+                    .sentToId( customer.getId() )
+                    .sendAt( LocalDateTime.now() )
+                    .content( "Hello from stechlabs" )
+                    .sender( "Saif" )
+                    .build();
+            System.out.println( notificationRequest );
+            notificationClient.pushNotification( notificationRequest );
         }
-
     }
 
     public Customer find( int customerId ){
