@@ -1,0 +1,27 @@
+# IntelliJ IDEA
+.idea/
+
+# Compiled bytecode
+target/
+bin/
+out/
+
+# Spring Boot
+*.log
+*.tmp
+spring-boot-protocol.dat
+
+# Maven
+log/
+# Gradle
+.gradle/
+build/
+
+# IDE-specific files
+*.iml
+*.iws
+*.ipr
+
+# OS-specific files
+.DS_Store
+Thumbs.db
