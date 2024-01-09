@@ -29,12 +29,18 @@ services:
     networks:
       - postgres
     restart: unless-stopped
-
+# distributed tracing
   zipkin:
     container_name: zipkin
     image: openzipkin/zipkin
     ports:
       - "9411:9411"
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.9.11-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 networks:
   postgres:
     driver: bridge
