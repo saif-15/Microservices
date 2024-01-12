@@ -2,7 +2,7 @@
 .idea/
 
 # Compiled bytecode
-target/
+**/target/
 bin/
 out/
 
