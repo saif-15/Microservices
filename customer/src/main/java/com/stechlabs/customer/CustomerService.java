@@ -1,13 +1,12 @@
 package com.stechlabs.customer;
 
+import com.stechlabs.amqp.RabbitMQMessageProducer;
 import com.stechlabs.clients.fraud.FraudCheckResponse;
 import com.stechlabs.clients.fraud.FraudClient;
 import com.stechlabs.clients.notification.NotificationClient;
 import com.stechlabs.clients.notification.NotificationRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 
 @Service
@@ -17,6 +16,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final FraudClient fraudClient;
     private final NotificationClient notificationClient;
+    private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
     public void registerCustomer( CustomerRegistrationRequest registrationRequest ){
         Customer customer = Customer.builder()
@@ -39,12 +39,11 @@ public class CustomerService {
         if( fraudCheckResponse != null && ! fraudCheckResponse.isFraudster() ){
             NotificationRequest notificationRequest = NotificationRequest.builder()
                     .sentToId( customer.getId() )
-                    .sendAt( LocalDateTime.now() )
                     .content( "Hello from stechlabs" )
                     .sender( "Saif" )
                     .build();
-            System.out.println( notificationRequest );
-            notificationClient.pushNotification( notificationRequest );
+
+            rabbitMQMessageProducer.produce( notificationRequest , "internal.exchange", "internal.notification.routing-key");
         }
     }
 

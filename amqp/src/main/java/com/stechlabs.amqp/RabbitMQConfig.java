@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     private final ConnectionFactory connectionFactory;
-
     @Bean
     public AmqpTemplate amqpTemplate(){
         RabbitTemplate rabbitTemplate = new RabbitTemplate( connectionFactory );
