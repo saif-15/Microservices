@@ -35,14 +35,100 @@ services:
     image: openzipkin/zipkin
     ports:
       - "9411:9411"
+    networks:
+      - spring
+
+# message broker
   rabbitmq:
     container_name: rabbitmq
     image: rabbitmq:3.9.11-management-alpine
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - spring
+
+# Eureka Server
+  eureka-server:
+    container_name: eureka-server
+    image: shady15/eureka-server:latest
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+
+  api-gateway:
+    container_name: api-gateway
+    image: shady15/api-gateway:latest
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+      - eureka-server
+
+# Customer Microservice
+  customer:
+    container_name: customer
+    image: shady15/customer:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - zipkin
+      - eureka-server
+      - postgres
+      - rabbitmq
+
+# Fraud microservice
+  fraud:
+    container_name: fraud
+    image: shady15/fraud:latest
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - zipkin
+      - eureka-server
+      - postgres
+      - rabbitmq
+
+# Notification Microservice
+  notification:
+    container_name: notification
+    image: shady15/notification:latest
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - postgres
+      - spring
+    depends_on:
+      - zipkin
+      - eureka-server
+      - rabbitmq
+      - postgres
+
 networks:
   postgres:
+    driver: bridge
+  spring:
     driver: bridge
 
 volumes:
