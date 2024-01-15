@@ -29,3 +29,13 @@ This repository contains a sample Spring Boot microservice application, along wi
 
    ```bash
    git clone https://github.com/saif-15/Microservices.git
+
+2. Go Into Directory:
+
+   ```bash
+   cd Microservices
+
+3. Run With Docker Compose:
+
+   ```bash
+    docker compose up -d
