@@ -98,6 +98,13 @@ This repository contains a Comprehensive guide to build the microservices using 
    kubectl get ingress
 ![ingress](https://github.com/saif-15/Microservices/assets/46129194/70841dc6-4341-4f1a-ae87-1c35ba41e4bf)
 
+7. Minikube Specific Config
+
+   ```bash
+   minikube tunnel
+   
+To expose the application outside minikube cluster
+
 
 
    
