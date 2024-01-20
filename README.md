@@ -80,4 +80,24 @@ This repository contains a Comprehensive guide to build the microservices using 
    kubectl apply -f ./kubernetes/minikube/services/fraud/
    kubectl apply -f ./kubernetes/minikube/ingress/
    
-    
+4. Verify the Pods:
+
+   ```bash
+   kubectl get pods
+  ![pods](https://github.com/saif-15/Microservices/assets/46129194/86551c93-9190-42dd-be6e-59dc85502b97)
+
+5. Verify the Services:
+
+   ```bash
+   kubectl get svc
+  ![services](https://github.com/saif-15/Microservices/assets/46129194/c33b32e8-edac-41e1-b99d-463b69e69d2e)
+
+6. Verify the Ingress:
+
+   ```bash
+   kubectl get ingress
+![ingress](https://github.com/saif-15/Microservices/assets/46129194/70841dc6-4341-4f1a-ae87-1c35ba41e4bf)
+
+
+
+   
