@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Slf4j
 @RestController
 @RequestMapping( "/api/v1/customers")
@@ -23,5 +25,13 @@ public class CustomerController {
         log.info( "new customer registration {}", customerRegistrationRequest );
         customerService.registerCustomer( customerRegistrationRequest );
 
+    }
+
+    @GetMapping( "/version")
+    public Map<String,String> getVersion(){
+        return Map.of(
+                "version",
+                "v2"
+        );
     }
 }
