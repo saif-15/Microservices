@@ -47,6 +47,19 @@ This repository contains a Comprehensive guide to build the microservices using 
 
    ```bash
     docker compose up -d
+   
+4. Verify the Application
+
+  - Eureka Server = http://localhost:8761/
+  - RabbitMQ = http://localhost:15672/ (guest,guest)
+  - Zipkin = http://localhost:9411/zipkin/
+  - Customer = http://localhost:8083/api/v1/customers (POST)
+  -      {
+           "firstName": "saif",
+           "lastName": "ulhaq",
+           "email": "saif@email.com"
+         }
+   
 
 ## Running the application on Kubernetes cluster
 
