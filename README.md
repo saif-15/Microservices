@@ -49,7 +49,8 @@ This repository contains a Comprehensive guide to build the microservices using 
     docker compose up -d
    
 4. Verify the Application
-
+   
+  - Pgadmin Ui = http://localhost:5050/  ( configure postgres running on 5432)
   - Eureka Server = http://localhost:8761/
   - RabbitMQ = http://localhost:15672/ (guest,guest)
   - Zipkin = http://localhost:9411/zipkin/
