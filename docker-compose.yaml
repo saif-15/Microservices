@@ -49,30 +49,30 @@ services:
       - spring
 
 # Eureka Server
-#  eureka-server:
-#    container_name: eureka-server
-#    image: shady15/eureka-server:latest
-#    ports:
-#      - "8761:8761"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - spring
-#    depends_on:
-#      - zipkin
+  eureka-server:
+    container_name: eureka-server
+    image: shady15/eureka-server:latest
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - zipkin
 
-#  api-gateway:
-#    container_name: api-gateway
-#    image: shady15/api-gateway:latest
-#    ports:
-#      - "8083:8083"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - spring
-#    depends_on:
-#      - zipkin
-#      - eureka-server
+  api-gateway:
+    container_name: api-gateway
+    image: shady15/api-gateway:latest
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+      - eureka-server
 
 # Customer Microservice
   customer:
@@ -87,7 +87,7 @@ services:
       - postgres
     depends_on:
       - zipkin
-#      - eureka-server
+      - eureka-server
       - postgres
       - rabbitmq
 
@@ -104,7 +104,7 @@ services:
       - postgres
     depends_on:
       - zipkin
-#      - eureka-server
+      - eureka-server
       - postgres
       - rabbitmq
 
@@ -121,7 +121,7 @@ services:
       - spring
     depends_on:
       - zipkin
-#      - eureka-server
+      - eureka-server
       - rabbitmq
       - postgres
 

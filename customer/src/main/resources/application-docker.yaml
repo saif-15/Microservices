@@ -24,7 +24,6 @@ eureka:
     service-url:
       defaultZone: http://eureka-server:8761/eureka/
     register-with-eureka: true
-    enabled: false
-
+    enabled: true
 server:
   port: 8080
