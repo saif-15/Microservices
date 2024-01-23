@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        bin/sh 'echo passed'
+        sh 'echo passed'
       //  git branch: 'master', url: 'https://github.com/saif-15/Microservices.git'
       }
     }
