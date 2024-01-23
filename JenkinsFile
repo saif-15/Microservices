@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        /bin/sh 'echo passed'
+        bin/sh 'echo passed'
       //  git branch: 'master', url: 'https://github.com/saif-15/Microservices.git'
       }
     }
@@ -19,9 +19,9 @@ pipeline {
       steps {
         script {
            docker.withRegistry('https://index.docker.io/v1/', "docker-credentials") {
-               /bin/sh 'mvn clean install'
+               bin/sh 'mvn clean install'
               // build the project and create a JAR file
-               /bin/sh 'mvn clean package -P build-docker-image'
+               bin/sh 'mvn clean package -P build-docker-image'
           }
         }
       }
